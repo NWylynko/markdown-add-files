@@ -2229,10 +2229,8 @@ const buzzword = _actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput("buzzword")
 function run() {
     return __awaiter(this, void 0, void 0, function* () {
         const folders = "/home/runner/work/**/*.md.template";
-        console.log(folders);
         //get the files that end in .md.template
         const files = yield globAsync(folders);
-        console.log(files);
         // loop over each file found
         files.forEach((path) => __awaiter(this, void 0, void 0, function* () {
             // get the path of the readme file so the files called from it are local

@@ -13,12 +13,8 @@ const buzzword = core.getInput("buzzword") || "+++";
 async function run() {
   const folders = "/home/runner/work/**/*.md.template";
 
-  console.log(folders)
-
   //get the files that end in .md.template
   const files = await globAsync(folders);
-
-  console.log(files)
 
   // loop over each file found
   files.forEach(async (path) => {
