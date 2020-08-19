@@ -2228,13 +2228,15 @@ const globAsync = util__WEBPACK_IMPORTED_MODULE_2__.promisify(glob__WEBPACK_IMPO
 const buzzword = _actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput("buzzword") || "+++";
 function run() {
     return __awaiter(this, void 0, void 0, function* () {
-        const folders = "/home/**/*.md.template";
+        const folders = "/home/runner/work/**/*.md.template";
         console.log(folders);
         //get the files that end in .md.template
         const files = yield globAsync(folders);
         console.log(files);
         // loop over each file found
         files.forEach((path) => __awaiter(this, void 0, void 0, function* () {
+            // get the path of the readme file so the files called from it are local
+            const pathWithoutFile = path.split('/').splice(-1, 1).join('/') + '/';
             // read in the markdown template file
             const markdownFile = yield readFile(path, "utf8");
             // split the file by the buzzword to 'find' it
@@ -2251,13 +2253,13 @@ function run() {
                     // just want the first line
                     const line = part.split("\n")[0];
                     // cut off the "file: " part
-                    const fileDir = line.substring(6);
+                    const fileDir = pathWithoutFile + line.substring(6);
                     try {
                         // read in the file
                         const file = yield readFile(fileDir, "utf8");
                         // this just gets the extension of the file by taking whatever is after the last .
                         const fileExtension = fileDir.split(".")[fileDir.split(".").length - 1];
-                        // add the file inbetween ```
+                        // add the file in-between ```
                         const markdown = "\n```" + fileExtension + "\n" + file + "\n```\n";
                         // return stuff so the later code can use it to replace the markdown
                         return {

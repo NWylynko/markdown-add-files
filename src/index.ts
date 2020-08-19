@@ -11,7 +11,7 @@ const globAsync = util.promisify(glob);
 const buzzword = core.getInput("buzzword") || "+++";
 
 async function run() {
-  const folders = "/home/**/*.md.template";
+  const folders = "/home/runner/work/**/*.md.template";
 
   console.log(folders)
 
@@ -22,6 +22,10 @@ async function run() {
 
   // loop over each file found
   files.forEach(async (path) => {
+
+    // get the path of the readme file so the files called from it are local
+    const pathWithoutFile = path.split('/').splice(-1,1).join('/') + '/'
+
     // read in the markdown template file
     const markdownFile = await readFile(path, "utf8");
 
@@ -42,7 +46,7 @@ async function run() {
           const line = part.split("\n")[0];
 
           // cut off the "file: " part
-          const fileDir = line.substring(6);
+          const fileDir = pathWithoutFile + line.substring(6);
 
           try {
             // read in the file
@@ -53,7 +57,7 @@ async function run() {
               fileDir.split(".").length - 1
             ];
 
-            // add the file inbetween ```
+            // add the file in-between ```
             const markdown = "\n```" + fileExtension + "\n" + file + "\n```\n";
 
             // return stuff so the later code can use it to replace the markdown
