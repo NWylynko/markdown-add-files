@@ -2230,8 +2230,10 @@ function run() {
     return __awaiter(this, void 0, void 0, function* () {
         // glob uses full path so __dirname is needed
         const folders = __dirname + "/../../**/*.md.template";
+        console.log(folders);
         //get the files that end in .md.template
         const files = yield globAsync(folders);
+        console.log(files);
         // loop over each file found
         files.forEach((path) => __awaiter(this, void 0, void 0, function* () {
             // read in the markdown template file

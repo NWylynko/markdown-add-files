@@ -14,8 +14,12 @@ async function run() {
   // glob uses full path so __dirname is needed
   const folders = __dirname + "/../../**/*.md.template";
 
+  console.log(folders)
+
   //get the files that end in .md.template
   const files = await globAsync(folders);
+
+  console.log(files)
 
   // loop over each file found
   files.forEach(async (path) => {
