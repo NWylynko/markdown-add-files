@@ -1,8 +1,0 @@
-# markdown-add-files
-github action to add in files as examples to markdown files 
-
-this action finds .md.template files and replaces `+++file: ./app.tsx` with the code from that file. it then takes that .md.template file and creates a file with just .md
-
-## example 
-this is a very simple action that simple builds the template files and then pushes the built markdown to the repo
-+++file: ./example/generate-markdown.yml

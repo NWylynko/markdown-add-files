@@ -1,10 +1,11 @@
 name: 'markdown-add-files'
 description: 'github action to add in files as examples to markdown files'
-icon: 'align-left'
-color: 'white'
+branding:
+  icon: 'align-left'
+  color: 'white'
 inputs:
-  buzzword:  # id of input
-    description: 'custom text to mark the files that need to be replaced'
+  buzzword:
+    description: 'custom text to mark the lines that need to be replaced'
     default: '+++'
 runs:
   using: 'node12'
