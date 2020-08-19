@@ -12,7 +12,7 @@ const buzzword = core.getInput("buzzword") || "+++";
 
 async function run() {
   // glob uses full path so __dirname is needed
-  const folders = __dirname + "/../**/*.md.template";
+  const folders = __dirname + "/../../**/*.md.template";
 
   //get the files that end in .md.template
   const files = await globAsync(folders);

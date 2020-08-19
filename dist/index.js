@@ -2229,7 +2229,7 @@ const buzzword = _actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput("buzzword")
 function run() {
     return __awaiter(this, void 0, void 0, function* () {
         // glob uses full path so __dirname is needed
-        const folders = __dirname + "/../**/*.md.template";
+        const folders = __dirname + "/../../**/*.md.template";
         //get the files that end in .md.template
         const files = yield globAsync(folders);
         // loop over each file found
