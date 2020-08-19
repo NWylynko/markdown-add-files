@@ -2236,7 +2236,9 @@ function run() {
         // loop over each file found
         files.forEach((path) => __awaiter(this, void 0, void 0, function* () {
             // get the path of the readme file so the files called from it are local
-            const pathWithoutFile = path.split('/').splice(0, -1).join('/') + '/';
+            let pathWithoutFileArray = path.split('/');
+            pathWithoutFileArray.pop();
+            const pathWithoutFile = pathWithoutFileArray.join('/') + '/';
             // read in the markdown template file
             const markdownFile = yield readFile(path, "utf8");
             // split the file by the buzzword to 'find' it
