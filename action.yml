@@ -1,5 +1,7 @@
 name: 'markdown-add-files'
 description: 'github action to add in files as examples to markdown files'
+icon: 'align-left'
+color: 'white'
 inputs:
   buzzword:  # id of input
     description: 'custom text to mark the files that need to be replaced'
