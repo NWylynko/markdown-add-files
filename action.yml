@@ -1,0 +1,9 @@
+name: 'markdown-add-files'
+description: 'github action to add in files as examples to markdown files'
+inputs:
+  buzzword:  # id of input
+    description: 'custom text to mark the files that need to be replaced'
+    default: '+++'
+runs:
+  using: 'node12'
+  main: 'dist/index.js'
