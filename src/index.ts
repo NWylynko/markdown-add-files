@@ -48,11 +48,11 @@ async function run() {
           const line = part.split("\n")[0];
 
           // cut off the "file: " part
-          const fileDir = pathWithoutFile + line.substring(6);
+          const fileDir = line.substring(6);
 
           try {
             // read in the file
-            const file = await readFile(fileDir, "utf8");
+            const file = await readFile(pathWithoutFile + fileDir, "utf8");
 
             // this just gets the extension of the file by taking whatever is after the last .
             const fileExtension = fileDir.split(".")[
@@ -77,7 +77,7 @@ async function run() {
       })
     );
 
-    console.log(`opened ./${path}`);
+    console.log(`opened ${path}`);
 
     // take out the .template part so its just .md
     const newFilePath = path.replace(".template", "");
@@ -94,7 +94,7 @@ async function run() {
 
     // write the new markdown file
     fs.writeFileSync(newFilePath, newMarkdownFile);
-    console.log(`✔ done ./${newFilePath}`);
+    console.log(`✔ done ${newFilePath}`);
   });
 }
 
