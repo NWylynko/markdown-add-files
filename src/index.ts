@@ -11,8 +11,7 @@ const globAsync = util.promisify(glob);
 const buzzword = core.getInput("buzzword") || "+++";
 
 async function run() {
-  // glob uses full path so __dirname is needed
-  const folders = __dirname + "/../../**/*.md.template";
+  const folders = "/home/**/*.md.template";
 
   console.log(folders)
 
@@ -72,13 +71,10 @@ async function run() {
       })
     );
 
-    // just get the local path to the markdown file
-    const shortPath = path.substring(__dirname.length - 4);
-
-    console.log(`opened ./${shortPath}`);
+    console.log(`opened ./${path}`);
 
     // take out the .template part so its just .md
-    const newFilePath = shortPath.replace(".template", "");
+    const newFilePath = path.replace(".template", "");
 
     let newMarkdownFile = markdownFile;
     for (const x of replacements) {

@@ -2228,8 +2228,7 @@ const globAsync = util__WEBPACK_IMPORTED_MODULE_2__.promisify(glob__WEBPACK_IMPO
 const buzzword = _actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput("buzzword") || "+++";
 function run() {
     return __awaiter(this, void 0, void 0, function* () {
-        // glob uses full path so __dirname is needed
-        const folders = __dirname + "/../../**/*.md.template";
+        const folders = "/home/**/*.md.template";
         console.log(folders);
         //get the files that end in .md.template
         const files = yield globAsync(folders);
@@ -2275,11 +2274,9 @@ function run() {
                     return {};
                 }
             })));
-            // just get the local path to the markdown file
-            const shortPath = path.substring(__dirname.length - 4);
-            console.log(`opened ./${shortPath}`);
+            console.log(`opened ./${path}`);
             // take out the .template part so its just .md
-            const newFilePath = shortPath.replace(".template", "");
+            const newFilePath = path.replace(".template", "");
             let newMarkdownFile = markdownFile;
             for (const x of replacements) {
                 // sometimes things just dont want to be replaced
