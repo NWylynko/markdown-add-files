@@ -24,7 +24,7 @@ async function run() {
   files.forEach(async (path) => {
 
     // get the path of the readme file so the files called from it are local
-    const pathWithoutFile = path.split('/').splice(-1,1).join('/') + '/'
+    const pathWithoutFile = path.split('/').splice(0,-1).join('/') + '/'
 
     // read in the markdown template file
     const markdownFile = await readFile(path, "utf8");
