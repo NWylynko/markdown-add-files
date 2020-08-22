@@ -2821,8 +2821,7 @@ function run() {
             // read in the markdown template file
             const markdownFile = yield readFile(path, "utf8");
             // split the file by the buzzword to 'find' it
-            const parts = markdownFile.split("<!-- add-");
-            console.log(parts);
+            const parts = markdownFile.split("\n<!-- add-");
             // using promise.all and map to force node to wait for the code in the loop to happen
             const replacements = yield Promise.all(parts.map((part) => __awaiter(this, void 0, void 0, function* () {
                 // just want the first line
