@@ -26,4 +26,8 @@ json
 ]
 ```
 
-+++web: https://raw.githubusercontent.com/NWylynko/markdown-add-files/master/examples/json2.json
+
+``` json
+[object Response]
+```
+
