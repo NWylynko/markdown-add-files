@@ -1,21 +1,23 @@
 import * as core from "@actions/core";
-import * as github from "@actions/github";
+// import * as github from "@actions/github";
 import * as fs from "fs";
 import * as util from "util";
 import * as glob from "glob";
-import * as fetch from "node-fetch";
+import fetch from "node-fetch";
 
 // convert callback functions to async friendly functions
 const readFile = util.promisify(fs.readFile);
 const globAsync = util.promisify(glob);
 
 // get the name of the repo this action is running in
-const fullRepo = github.context.payload.repository.full_name;
+// const fullRepo = github.context.payload.repository.full_name;
 
-const repo = fullRepo.split("/")[1];
+// const repo = fullRepo.split("/")[1];
 
 // only want to run the code in the repo this is being run on
-const repoDir = `/home/runner/work/${repo}/${repo}`;
+// const repoDir = `/home/runner/work/${repo}/${repo}`;
+
+const repoDir = __dirname + '/..'
 
 // get the buzzword if it has been defined by the action running this
 const buzzword = core.getInput("buzzword") || "+++";
@@ -81,7 +83,9 @@ async function run() {
 
           try {
             // read in the file
-            const file = await fetch(fileURL);
+            const response = await fetch(fileURL);
+
+            const file = await response.text()
 
             // this just gets the extension of the file by taking whatever is after the last .
             // needs to be changed to support more urls
