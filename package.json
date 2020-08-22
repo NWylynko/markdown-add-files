@@ -1,6 +1,6 @@
 {
   "name": "markdown-add-files",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "main": "index.js",
   "repository": "git@github.com:NWylynko/markdown-add-files.git",
   "author": "Nick Wylynko <nick1014375@gmail.com>",

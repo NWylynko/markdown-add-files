@@ -36,9 +36,7 @@ async function run() {
     const markdownFile = await readFile(path, "utf8");
 
     // split the file by the buzzword to 'find' it
-    const parts = markdownFile.split("<!-- add-");
-
-    console.log(parts)
+    const parts = markdownFile.split("\n<!-- add-");
 
     // using promise.all and map to force node to wait for the code in the loop to happen
     const replacements = await Promise.all(
