@@ -94,7 +94,7 @@ async function run() {
             return {
               markdown,
               fileDir: fileURL,
-              replace: `${buzzword}file: ${fileURL}`,
+              replace: `${buzzword}web: ${fileURL}`,
             };
           } catch (error) {
             throw new Error(`cant fetch ${fileURL} error: ${error}`);
