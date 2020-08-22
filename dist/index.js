@@ -2872,7 +2872,7 @@ function run() {
                         return {
                             markdown,
                             fileDir: fileURL,
-                            replace: `${buzzword}file: ${fileURL}`,
+                            replace: `${buzzword}web: ${fileURL}`,
                         };
                     }
                     catch (error) {
