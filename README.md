@@ -17,7 +17,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@master
-      - uses: ./
+      - uses: nwylynko/markdown-add-files@master
       - uses: EndBug/add-and-commit@v4
         with:
           author_name: README builder
