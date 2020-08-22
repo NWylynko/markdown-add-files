@@ -17,13 +17,10 @@ const repo = fullRepo.split("/")[1];
 // only want to run the code in the repo this is being run on
 const repoDir = `/home/runner/work/${repo}/${repo}`;
 
-// const repoDir = __dirname + '/..'
-
-// get the buzzword if it has been defined by the action running this
-const buzzword = core.getInput("buzzword") || "+++";
+// const repoDir = __dirname + '/../examples'
 
 async function run() {
-  const folders = `${repoDir}/**/*.md.template`;
+  const folders = `${repoDir}/**/*.md`;
 
   //get the files that end in .md.template
   const files = await globAsync(folders);
@@ -39,14 +36,16 @@ async function run() {
     const markdownFile = await readFile(path, "utf8");
 
     // split the file by the buzzword to 'find' it
-    const parts = markdownFile.split("\n" + buzzword);
+    const parts = markdownFile.split("<!-- add-");
+
+    console.log(parts)
 
     // using promise.all and map to force node to wait for the code in the loop to happen
     const replacements = await Promise.all(
       parts.map(async (part) => {
 
         // just want the first line
-        const line = part.split("\n")[0];
+        const line = part.split("-->")[0].trim()
 
         // we only want ones that start with file:
         // this will generally be because when u split a string it still has the first part
@@ -72,7 +71,7 @@ async function run() {
             return {
               markdown,
               fileDir,
-              replace: `${buzzword}file: ${fileDir}`,
+              replace: `<!-- add-file: ${fileDir} -->`,
             };
           } catch (error) {
             throw new Error(`cant open or find ${fileDir} error: ${error}`);
@@ -98,7 +97,7 @@ async function run() {
             return {
               markdown,
               fileDir: fileURL,
-              replace: `${buzzword}web: ${fileURL}`,
+              replace: `<!-- add-web: ${fileURL} -->`,
             };
           } catch (error) {
             throw new Error(`cant fetch ${fileURL} error: ${error}`);
@@ -111,22 +110,19 @@ async function run() {
 
     console.log(`opened ${path}`);
 
-    // take out the .template part so its just .md
-    const newFilePath = path.replace(".template", "");
-
     let newMarkdownFile = markdownFile;
     for (const x of replacements) {
-      // sometimes things just dont want to be replaced
+      // sometimes things just don't want to be replaced
       if (x.replace) {
-        // take out the 'file: ./example/app.tsx' and replace it with the markdown
-        newMarkdownFile = newMarkdownFile.replace(x.replace, x.markdown);
+        // append the markdown to the <!-- --> so it shows up underneath
+        newMarkdownFile = newMarkdownFile.replace(x.replace, x.replace + x.markdown);
         console.log(`  ✔ injected ${x.fileDir}`);
       }
     }
 
     // write the new markdown file
-    fs.writeFileSync(newFilePath, newMarkdownFile);
-    console.log(`✔ done ${newFilePath}`);
+    fs.writeFileSync(path, newMarkdownFile);
+    console.log(`✔ done ${path}`);
   });
 }
 

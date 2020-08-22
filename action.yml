@@ -3,10 +3,6 @@ description: 'github action to add in files as examples to markdown files'
 branding:
   icon: 'align-left'
   color: 'white'
-inputs:
-  buzzword:
-    description: 'custom text to mark the lines that need to be replaced'
-    default: '+++'
 runs:
   using: 'node12'
   main: 'dist/index.js'
