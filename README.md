@@ -7,7 +7,7 @@ this action finds .md.template files and replaces `+++file: ./app.tsx` with the 
 this is a very simple action that simple builds the template files and then pushes the built markdown to the repo
 
 
-```yml
+``` yml
 name: build markdown
 
 on: push

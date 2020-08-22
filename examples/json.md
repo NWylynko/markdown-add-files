@@ -1,7 +1,7 @@
 json
 
 
-```json
+``` json
 [
   {
     "age": 25,
@@ -26,4 +26,4 @@ json
 ]
 ```
 
-+++web: https://raw.githubusercontent.com/NWylynko/markdown-add-files/master/json/json2.json
++++web: https://raw.githubusercontent.com/NWylynko/markdown-add-files/master/examples/json2.json
