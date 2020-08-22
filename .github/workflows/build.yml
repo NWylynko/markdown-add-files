@@ -1,0 +1,20 @@
+name: build
+
+on: push
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      - uses: actions/setup-node@master
+        with:
+          node-version: 12
+      - run: yarn install
+      - run: yarn build
+      - uses: EndBug/add-and-commit@v4
+        with:
+          author_name: distribution builder
+          message: 'Updated distribution'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
