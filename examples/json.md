@@ -1,0 +1,29 @@
+json
+
+
+``` json
+[
+  {
+    "age": 25,
+    "name": "Noemi Saunders"
+  },
+  {
+    "age": 34,
+    "name": "Loretta Farmer"
+  },
+  {
+    "age": 38,
+    "name": "Marisol Juarez"
+  },
+  {
+    "age": 25,
+    "name": "Curtis Maddox"
+  },
+  {
+    "age": 21,
+    "name": "Molly Jackson"
+  }
+]
+```
+
++++web: https://raw.githubusercontent.com/NWylynko/markdown-add-files/master/examples/json2.json
