@@ -28,6 +28,18 @@ json
 
 
 ``` json
-[object Response]
+[{
+  "first_name": "Sonnie",
+  "last_name": "Colebourn",
+  "email": "scolebourn0@skyrock.com"
+}, {
+  "first_name": "Clemmie",
+  "last_name": "Danovich",
+  "email": "cdanovich1@angelfire.com"
+}, {
+  "first_name": "Gilda",
+  "last_name": "Lidington",
+  "email": "glidington2@ucla.edu"
+}]
 ```
 
