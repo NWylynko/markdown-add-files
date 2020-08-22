@@ -5,6 +5,10 @@ import * as util from "util";
 import * as glob from "glob";
 import fetch from "node-fetch";
 
+const customDir = core.getInput("dir") || "./";
+const customExtension = core.getInput("extension") || ".md";
+const customOutput = core.getInput("output") || ".md";
+
 // convert callback functions to async friendly functions
 const readFile = util.promisify(fs.readFile);
 const globAsync = util.promisify(glob);
@@ -15,13 +19,13 @@ const fullRepo = github.context.payload.repository.full_name;
 const repo = fullRepo.split("/")[1];
 
 // only want to run the code in the repo this is being run on
-const repoDir = `/home/runner/work/${repo}/${repo}`;
+const repoDir = `/home/runner/work/${repo}/${repo}/${customDir}`;
 
 // const repoDir = __dirname + '/../examples'
 
-async function run() {
-  const folders = `${repoDir}/**/*.md`;
+const folders = `${repoDir}**/*${customExtension}`;
 
+async function run() {
   //get the files that end in .md.template
   const files = await globAsync(folders);
 
@@ -41,9 +45,8 @@ async function run() {
     // using promise.all and map to force node to wait for the code in the loop to happen
     const replacements = await Promise.all(
       parts.map(async (part) => {
-
         // just want the first line
-        const line = part.split("-->")[0].trim()
+        const line = part.split("-->")[0].trim();
 
         // we only want ones that start with file:
         // this will generally be because when u split a string it still has the first part
@@ -60,10 +63,9 @@ async function run() {
             const file = await readFile(pathWithoutFile + fileDir, "utf8");
 
             // this just gets the extension of the file by taking whatever is after the last .
-            const fileExtension = fileDir.split(".").pop(); 
+            const fileExtension = fileDir.split(".").pop();
 
-            // add the file in-between ```
-            const markdown = "\n``` " + fileExtension + "\n" + file + "\n```\n";
+            const markdown = codeToMarkdown(fileExtension, file)
 
             // return stuff so the later code can use it to replace the markdown
             return {
@@ -82,14 +84,13 @@ async function run() {
             // read in the file
             const response = await fetch(fileURL);
 
-            const file = await response.text()
+            const file = await response.text();
 
             // this just gets the extension of the file by taking whatever is after the last .
             // needs to be changed to support more urls
             const fileExtension = fileURL.split(".").pop();
 
-            // add the file in-between ```
-            const markdown = "\n``` " + fileExtension + "\n" + file + "\n```\n";
+            const markdown = codeToMarkdown(fileExtension, file)
 
             // return stuff so the later code can use it to replace the markdown
             return {
@@ -113,15 +114,22 @@ async function run() {
       // sometimes things just don't want to be replaced
       if (x.replace) {
         // append the markdown to the <!-- --> so it shows up underneath
-        newMarkdownFile = newMarkdownFile.replace(x.replace, x.replace + x.markdown);
+        newMarkdownFile = newMarkdownFile.replace(
+          x.replace,
+          x.replace + x.markdown
+        );
         console.log(`  ✔ injected ${x.fileDir}`);
       }
     }
 
+    const newPath = path.replace('.md', customOutput)
+
     // write the new markdown file
-    fs.writeFileSync(path, newMarkdownFile);
-    console.log(`✔ done ${path}`);
+    fs.writeFileSync(newPath, newMarkdownFile);
+    console.log(`✔ done ${newPath}`);
   });
 }
+
+const codeToMarkdown = (fileExtension: string, file: string) => "\n``` " + fileExtension + "\n" + file + "\n```\n";
 
 run();

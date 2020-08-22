@@ -3,6 +3,19 @@ description: 'github action to add in files as examples to markdown files'
 branding:
   icon: 'align-left'
   color: 'white'
+inputs:
+  dir:
+    description: 'directory to look in recursively for markdown files, defaults to root dir of repo'
+    default: './'
+    required: false
+  template:
+    description: 'extension on template markdown files, eg. .md.template or .template.md'
+    default: '.md'
+    required: false
+  output:
+    description: 'extension of output markdown files, eg -with-files.md or .examples.md'
+    default: '.md'
+    required: false
 runs:
   using: 'node12'
   main: 'dist/index.js'
