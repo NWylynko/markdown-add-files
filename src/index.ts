@@ -14,14 +14,14 @@ const readFile = util.promisify(fs.readFile);
 const globAsync = util.promisify(glob);
 
 // get the name of the repo this action is running in
-// const fullRepo = github.context.payload.repository.full_name;
+const fullRepo = github.context.payload.repository.full_name;
 
-// const repo = fullRepo.split("/")[1];
+const repo = fullRepo.split("/")[1];
 
 // only want to run the code in the repo this is being run on
-// const repoDir = `/home/runner/work/${repo}/${repo}/${customDir}`;
+const repoDir = `/home/runner/work/${repo}/${repo}/${customDir}`;
 
-const repoDir = __dirname + "/../examples";
+// const repoDir = __dirname + "/../examples";
 
 const folders = `${repoDir}**/*${customExtension}`;
 
