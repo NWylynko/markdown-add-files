@@ -14,19 +14,19 @@ const readFile = util.promisify(fs.readFile);
 const globAsync = util.promisify(glob);
 
 // get the name of the repo this action is running in
-const fullRepo = github.context.payload.repository.full_name;
+// const fullRepo = github.context.payload.repository.full_name;
 
-const repo = fullRepo.split("/")[1];
+// const repo = fullRepo.split("/")[1];
 
 // only want to run the code in the repo this is being run on
-const repoDir = `/home/runner/work/${repo}/${repo}/${customDir}`;
+// const repoDir = `/home/runner/work/${repo}/${repo}/${customDir}`;
 
-// const repoDir = __dirname + '/../examples'
+const repoDir = __dirname + "/../examples";
 
 const folders = `${repoDir}**/*${customExtension}`;
 
 async function run() {
-  //get the files that end in .md.template
+  // get the files that end in .md
   const files = await globAsync(folders);
 
   // loop over each file found
@@ -37,7 +37,10 @@ async function run() {
     const pathWithoutFile = pathWithoutFileArray.join("/") + "/";
 
     // read in the markdown template file
-    const markdownFile = await readFile(path, "utf8");
+    let markdownFile = await readFile(path, "utf8");
+    console.log(`opened ${path}`);
+
+    markdownFile = removeStaleMarkdown(markdownFile);
 
     // split the file by the buzzword to 'find' it
     const parts = markdownFile.split("\n<!-- add-");
@@ -65,7 +68,7 @@ async function run() {
             // this just gets the extension of the file by taking whatever is after the last .
             const fileExtension = fileDir.split(".").pop();
 
-            const markdown = codeToMarkdown(fileExtension, file)
+            const markdown = codeToMarkdown(fileExtension, file);
 
             // return stuff so the later code can use it to replace the markdown
             return {
@@ -81,16 +84,14 @@ async function run() {
           const fileURL = line.substring(5);
 
           try {
-            // read in the file
-            const response = await fetch(fileURL);
-
-            const file = await response.text();
+            // fetch the file
+            const file = await (await fetch(fileURL)).text();
 
             // this just gets the extension of the file by taking whatever is after the last .
             // needs to be changed to support more urls
             const fileExtension = fileURL.split(".").pop();
 
-            const markdown = codeToMarkdown(fileExtension, file)
+            const markdown = codeToMarkdown(fileExtension, file);
 
             // return stuff so the later code can use it to replace the markdown
             return {
@@ -107,8 +108,6 @@ async function run() {
       })
     );
 
-    console.log(`opened ${path}`);
-
     let newMarkdownFile = markdownFile;
     for (const x of replacements) {
       // sometimes things just don't want to be replaced
@@ -122,7 +121,7 @@ async function run() {
       }
     }
 
-    const newPath = path.replace('.md', customOutput)
+    const newPath = path.replace(".md", customOutput);
 
     // write the new markdown file
     fs.writeFileSync(newPath, newMarkdownFile);
@@ -130,6 +129,20 @@ async function run() {
   });
 }
 
-const codeToMarkdown = (fileExtension: string, file: string) => "\n``` " + fileExtension + "\n" + file + "\n```\n";
+const codeToMarkdown = (fileExtension: string, file: string) =>
+  "\n``` " + fileExtension + " markdown-add-files\n" + file + "\n```\n";
+
+const removeStaleMarkdown = (markdown: string) => {
+  const firstRegex = new RegExp(/\n``` [A-Za-z]* markdown-add-files\n/g);
+  const firstLines = markdown.match(firstRegex)
+  let parts = markdown.split(firstRegex);
+  parts.shift();
+  parts.map((part, index) => {
+    const MD = firstLines[index] + part.split(/\n```\n/)[0] + "\n```\n"
+    markdown = markdown.replace(MD, '')
+  })
+  console.log(`  ✔ removed stale markdown`);
+  return markdown
+};
 
 run();
