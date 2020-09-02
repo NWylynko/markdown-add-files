@@ -25,7 +25,6 @@ json
   }
 ]
 ```
-
 <!-- add-web: https://raw.githubusercontent.com/NWylynko/markdown-add-files/master/examples/json2.json -->
 ``` json markdown-add-files
 [{

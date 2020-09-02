@@ -130,7 +130,7 @@ async function run() {
 }
 
 const codeToMarkdown = (fileExtension: string, file: string) =>
-  "\n``` " + fileExtension + " markdown-add-files\n" + file + "\n```\n";
+  "\n``` " + fileExtension + " markdown-add-files\n" + file + "\n```";
 
 const removeStaleMarkdown = (markdown: string) => {
   const firstRegex = new RegExp(/\n``` [A-Za-z]* markdown-add-files\n/g);
@@ -138,7 +138,7 @@ const removeStaleMarkdown = (markdown: string) => {
   let parts = markdown.split(firstRegex);
   parts.shift();
   parts.map((part, index) => {
-    const MD = firstLines[index] + part.split(/\n```\n/)[0] + "\n```\n"
+    const MD = firstLines[index] + part.split(/\n```/)[0] + "\n```"
     markdown = markdown.replace(MD, '')
   })
   console.log(`  ✔ removed stale markdown`);
