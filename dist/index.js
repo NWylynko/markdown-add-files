@@ -2903,7 +2903,7 @@ function run() {
 }
 const codeToMarkdown = (fileExtension, file) => "\n``` " + fileExtension + " markdown-add-files\n" + file + "\n```";
 const removeStaleMarkdown = (markdown) => {
-    const firstRegex = new RegExp(/\n``` [A-Za-z]* markdown-add-files\n/g);
+    const firstRegex = new RegExp(/\n```.*markdown-add-files.*\n/g);
     const firstLines = markdown.match(firstRegex);
     let parts = markdown.split(firstRegex);
     parts.shift();
