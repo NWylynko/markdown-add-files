@@ -2,6 +2,7 @@ json
 
 <!-- add-file: ./json1.json -->
 ``` json markdown-add-files
+
 [
   {
     "age": 25,
@@ -25,8 +26,10 @@ json
   }
 ]
 ```
+
 <!-- add-web: https://raw.githubusercontent.com/NWylynko/markdown-add-files/master/examples/json2.json -->
 ``` json markdown-add-files
+
 [{
   "first_name": "Sonnie",
   "last_name": "Colebourn",

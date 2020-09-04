@@ -7,7 +7,7 @@
   "license": "MIT",
   "scripts": {
     "build": "ncc build src/index.ts",
-    "start": "ts-node src/index.ts"
+    "dev": "ts-node src/index.ts"
   },
   "dependencies": {
     "@actions/core": "^1.2.4",
