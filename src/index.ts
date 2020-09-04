@@ -130,10 +130,10 @@ async function run() {
 }
 
 const codeToMarkdown = (fileExtension: string, file: string) =>
-  "\n``` " + fileExtension + " markdown-add-files\n\n" + file + "\n```";
+  "\n\n``` " + fileExtension + " markdown-add-files\n" + file + "\n```";
 
 const removeStaleMarkdown = (markdown: string) => {
-  const firstRegex = new RegExp(/\n```.*markdown-add-files.*\n\n/g);
+  const firstRegex = new RegExp(/\n\n```.*markdown-add-files.*\n/g);
   const firstLines = markdown.match(firstRegex)
   let parts = markdown.split(firstRegex);
   parts.shift();
